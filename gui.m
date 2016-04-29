@@ -47,7 +47,13 @@ imshow(im);
 
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
+%%%function to add an image to the database
 imageToEncode = uigetfile('*','Select the image');
 addImageToDB(imageToEncode,imageToEncode);
 
 
+% --- Executes on button press in pushbutton3.
+function pushbutton3_Callback(hObject, eventdata, handles)
+%%% function to to recognize the object in a new image
+objectToRecognize = uigetfile('*','Select the image');
+recognizeObject(objectToRecognize);
