@@ -3,7 +3,9 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 start = cputime;
 
-transforms = encodeFractalImage( 'Images/zlena-128x128.jpg');
+%transforms = encodeFractalImage( 'Images/zlena-128x128.jpg');
+transforms = encodeFractalImage( 'Images/lena.jpg');
+
 
 encodingTime = cputime - start;
 
