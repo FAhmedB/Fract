@@ -33,9 +33,18 @@ All_areas = vertcat(S.Area);
 [MaxArea, MaxAreaIdx] = (max(All_areas(:)));
 biggestBox = S(MaxAreaIdx).BoundingBox;
 
-% Cropping
-croppedObject = imcrop(img, biggestBox);
+grayObj = imcrop(img, biggestBox);
+figure, imshow(grayObj), title('Gray Object');
 
-imshow(croppedObject), title('Object');
+bwObj = imcrop(smoothedObj, biggestBox);
+figure, imshow(bwObj), title('Binary Object');
+
+
+grayObjWithoutBackground = uint8(bwObj) .* grayObj;
+imshow(grayObjWithoutBackground), title('Object');
+
+level = graythresh(grayObj);
+finalObject = im2bw(grayObjWithoutBackground, 0.7*level);
+figure, imshow(finalObject), title('Final Binary Object');
 end
 
