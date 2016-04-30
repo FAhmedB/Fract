@@ -1,4 +1,4 @@
-function [ croppedObject ] = cropToObject( img )
+function [ finalObject ] = cropToObject( img )
 %CROPTOOBJECT removes the background and return only
 % the object in a new image
 

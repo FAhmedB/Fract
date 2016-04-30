@@ -1,15 +1,19 @@
-function kBlocks = into64Blocks( inputImage, shift1Scale, shitf2Scale )
+function kBlocks = intoDomainBlocks( inputImage )
 %IMAGEINTOBLOCKS Splits the input image into blocks of the size sizeBlock
 %and overlapped by shiftBlock
 
-[nRows nColumns ] = size(inputImage);
-size1Block = floor(nRows/8);
-size2Block = floor(nColumns/8);
-blocks = zeros(size1Block, size2Block, 64);
-keys = zeros(2, 64);
+shiftScale = Cst.SHIFTSCALE;
 
-shift1 = floor(shift1Scale*size1Block);
-shift2 = floor(shift2Scale*size2Block);
+
+[nRows nColumns ] = size(inputImage);
+size1Block = floor(nRows/4);
+size2Block = floor(nColumns/4);
+shift1 = floor(shiftScale*size1Block);
+shift2 = floor(shiftScale*size2Block);
+nBlocks = (((nRows - size1Block) / shift1) + 1) * (((nColumns - size2Block) / shift2) + 1);
+
+blocks = logical(zeros(size1Block, size2Block, nBlocks));
+keys = zeros(2, nBlocks);
 
 iterator = 1;
 for r = 1:shift1:(nRows-size1Block+1)

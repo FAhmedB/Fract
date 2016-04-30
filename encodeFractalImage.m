@@ -14,12 +14,17 @@ function [ transforms ] = encodeFractalImage(image)
 readImage = imread(image);
 img = normalizeImage(readImage);
 
-kBlocksR = intoBlocks(img, Cst.B, Cst.B);
-kBlocksD = intoBlocks(img, Cst.D, Cst.B);
+
+kBlocksR = intoRangeBlocks(img);
+kBlocksD = intoDomainBlocks(img);
 
 nBlocksR = length(kBlocksR.keys);
-sizeBlockR = length(kBlocksR.blocks(:,:,1));
-sizeBlockD = length(kBlocksD.blocks(:,:,1));
+size1BlockR = size(kBlocksR.blocks(:,:,1),1);
+size2BlockR = size(kBlocksR.blocks(:,:,1),2);
+
+size1BlockD = size(kBlocksD.blocks(:,:,1),1);
+size2BlockD = size(kBlocksD.blocks(:,:,1),2);
+
 transforms = zeros(8,nBlocksR);
 
 resizedKBlocksD = shrinkKBlocks(kBlocksD, sizeBlockR);
