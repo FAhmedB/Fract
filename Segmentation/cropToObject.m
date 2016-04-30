@@ -26,7 +26,7 @@ smoothedObj = imerode(withoutBorders,seD);
 smoothedObj = imerode(smoothedObj,seD);
 
 % Finding regions
-S = regionprops(smoothedObj, 'Area','Eccentricity','Centroid','BoundingBox');
+S = regionprops(smoothedObj, 'Area','BoundingBox');
 
 % Finding the biggest region
 All_areas = vertcat(S.Area);
