@@ -1,7 +1,7 @@
-function [ outputBlock ] = transform( block, delta, alpha, isometryNumber )
+function [ outputBlock ] = transform( block, isometryNumber )
 %TRANSFORM Summary of this function goes here
 %   Detailed explanation goes here
 
-outputBlock = alpha * block + delta;
+outputBlock = isometry(block);
 end
 
