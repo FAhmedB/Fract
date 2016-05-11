@@ -8,15 +8,15 @@ error = inf;
 arrayOfObjects = db.arrayOfObjects;
 for o = arrayOfObjects
     decodedImage = decodeFractalImage( o.transforms, img, 1);
-    o.name
-    errorTemp = rmse(img, decodedImage)
+    o.name;
+    errorTemp = berror(img, decodedImage);
     if errorTemp < error
         recognizedObject = o.name;
         error = errorTemp;
     end
 
 end
-name = recognizedObject;
+name = recognizedObject
 NET.addAssembly('System.Speech');
 obj = System.Speech.Synthesis.SpeechSynthesizer;
 obj.Volume = 100;

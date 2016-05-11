@@ -3,13 +3,13 @@ addpath(genpath(fileparts(mfilename('fullpath'))));
 
 start = cputime;
 
-transforms = encodeFractalImage( 'Images/zlena-128x128.jpg');
+transforms = encodeFractalImage( 'Images/oh1.jpg');
 
 encodingTime = cputime - start;
 
 start = cputime;
 
-decodedImage = decodeFractalImage( transforms, [Cst.DEFINITION, Cst.DEFINITION], 7);
+decodedImage = decodeFractalImage( transforms, imread('Images/oh1.jpg'), 1);
 
 decodingTime = cputime - start;
-imshow(uint8(decodedImage));
+imshow(decodedImage);
