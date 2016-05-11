@@ -24,7 +24,7 @@ withoutBorders = imclearborder(filledObj, 4);
 seD = strel('diamond',1);
 smoothedObj = imerode(withoutBorders,seD);
 smoothedObj = imerode(smoothedObj,seD);
-
+figure, imshow(smoothedObj), title('Smoothed object');
 % Finding regions
 S = regionprops(smoothedObj, 'Area','BoundingBox');
 
@@ -34,17 +34,26 @@ All_areas = vertcat(S.Area);
 biggestBox = S(MaxAreaIdx).BoundingBox;
 
 grayObj = imcrop(img, biggestBox);
-%figure, imshow(grayObj), title('Gray Object');
+figure, imshow(grayObj), title('Gray Object');
 
 bwObj = imcrop(smoothedObj, biggestBox);
-%figure, imshow(bwObj), title('Binary Object');
+figure, imshow(bwObj), title('Binary Object');
+[rotation, box] = getBestRotation(bwObj)
 
+bwObjCropped = imcrop(imrotate(bwObj,rotation),box);
+figure, imshow(bwObjCropped), title('Binary Object Cropped');
 
-grayObjWithoutBackground = uint8(bwObj) .* uint8(grayObj);
-%imshow(grayObjWithoutBackground), title('Object');
+grayObjCropped = imcrop(imrotate(grayObj,rotation),box);
+
+grayObjWithoutBackground = uint8(bwObjCropped) .* grayObjCropped;
+imshow(grayObjWithoutBackground), title('Object');
 
 level = graythresh(grayObj);
 finalObject = im2bw(grayObjWithoutBackground, 0.7*level);
-%figure, imshow(finalObject), title('Final Binary Object');
+
+if ~leftIsBigger(finalObject)
+    finalObject = imrotate(finalObject,180);
+end
+figure, imshow(finalObject), title('Final Binary Object');
 end
 
