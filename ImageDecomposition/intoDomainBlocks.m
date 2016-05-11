@@ -10,7 +10,7 @@ size1Block = floor(nRows/4);
 size2Block = floor(nColumns/4);
 shift1 = floor(shiftScale*size1Block);
 shift2 = floor(shiftScale*size2Block);
-nBlocks = (((nRows - size1Block) / shift1) + 1) * (((nColumns - size2Block) / shift2) + 1);
+nBlocks = ((floor((nRows - size1Block) / shift1)) + 1) * ((floor((nColumns - size2Block) / shift2)) + 1);
 
 blocks = logical(zeros(size1Block, size2Block, nBlocks));
 keys = zeros(2, nBlocks);
