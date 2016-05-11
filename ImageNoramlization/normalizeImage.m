@@ -3,8 +3,9 @@ function outputImage = normalizeImage( image )
 %predefined size
 
 
-outputImage = toGray(image);
-outputImage = normalizeDefinition(outputImage);
+outputImage = normalizeDefinition(image);
+outputImage = toGray(outputImage);
+outputImage = cropToObject(outputImage);
 
 end
 

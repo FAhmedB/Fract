@@ -9,8 +9,8 @@ error = inf;
 for i = 1:nBlocks
     blockTemp = kBlocks.blocks(:,:,i);
     keyTemp = kBlocks.keys(:,i);
-    for sym = 1:4
-        errorTemp = berror(block,isometry(blockTemp, sym);
+    for sym = 0:3
+        errorTemp = berror(block,isometry(blockTemp, sym));
         if errorTemp < error
             error = errorTemp;
             line = keyTemp(1);

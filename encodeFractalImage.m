@@ -11,7 +11,6 @@ function [ transforms ] = encodeFractalImage(image)
 readImage = imread(image);
 img = normalizeImage(readImage);
 
-
 kBlocksR = intoRangeBlocks(img);
 kBlocksD = intoDomainBlocks(img);
 
@@ -24,7 +23,7 @@ size2BlockD = size(kBlocksD.blocks(:,:,1),2);
 
 transforms = zeros(5,nBlocksR);
 
-resizedKBlocksD = shrinkKBlocks(kBlocksD, sizeBlockR);
+resizedKBlocksD = shrinkKBlocks(kBlocksD, size1BlockR, size2BlockR);
 
 
 h = waitbar(0,'Encoding progress ... ');

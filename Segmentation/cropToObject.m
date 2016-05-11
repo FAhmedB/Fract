@@ -34,17 +34,17 @@ All_areas = vertcat(S.Area);
 biggestBox = S(MaxAreaIdx).BoundingBox;
 
 grayObj = imcrop(img, biggestBox);
-figure, imshow(grayObj), title('Gray Object');
+%figure, imshow(grayObj), title('Gray Object');
 
 bwObj = imcrop(smoothedObj, biggestBox);
-figure, imshow(bwObj), title('Binary Object');
+%figure, imshow(bwObj), title('Binary Object');
 
 
-grayObjWithoutBackground = uint8(bwObj) .* grayObj;
-imshow(grayObjWithoutBackground), title('Object');
+grayObjWithoutBackground = uint8(bwObj) .* uint8(grayObj);
+%imshow(grayObjWithoutBackground), title('Object');
 
 level = graythresh(grayObj);
 finalObject = im2bw(grayObjWithoutBackground, 0.7*level);
-figure, imshow(finalObject), title('Final Binary Object');
+%figure, imshow(finalObject), title('Final Binary Object');
 end
 
