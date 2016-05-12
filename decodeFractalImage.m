@@ -21,6 +21,6 @@ for iteration=1:numberOfIterations
         newImage(iR+1:iR+B1,jR+1:jR+B2) = isometry(shrinkBlock(initialImage(iD+1:iD+D1,jD+1:jD+D2),B1,B2), sym);        
     end
 end
-
+ 
 end
 

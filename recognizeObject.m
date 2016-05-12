@@ -3,13 +3,14 @@ function name = recognizeObject( image )
 %   Detailed explanation goes here
 
 img = normalizeImage(imread(image));
+img = cropToObject(img,1);
 db = load('fractalDB.mat');
 error = inf;
 arrayOfObjects = db.arrayOfObjects;
 for o = arrayOfObjects
     decodedImage = decodeFractalImage( o.transforms, img, 1);
-    o.name;
-    errorTemp = berror(img, decodedImage);
+    o.name
+    errorTemp = berror(img, decodedImage)
     if errorTemp < error
         recognizedObject = o.name;
         error = errorTemp;

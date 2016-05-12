@@ -2,7 +2,12 @@ function  addImageToDB( image, imageName )
 %ADDIMAGETODB Summary of this function goes here
 %   Detailed explanation goes here
 
-transforms = encodeFractalImage(image);
+readImage = imread(image);
+img = normalizeImage(readImage);
+croppedImages = cropToObject(img,3);
+
+for i=1:3
+transforms = encodeFractalImage(croppedImages{i});
 newImageEntry.transforms = transforms;
 newImageEntry.name = imageName;
 if (exist('fractalDB.mat','file') ~= 2)
@@ -12,6 +17,7 @@ end
 db = load('fractalDB.mat');
 arrayOfObjects = [db.arrayOfObjects, newImageEntry];
 save('fractalDB.mat','arrayOfObjects');
+end
 
 end
 

@@ -1,4 +1,4 @@
-function [ transforms ] = encodeFractalImage(image)
+function [ transforms ] = encodeFractalImage(img)
 %ENCODEFRACTAL Summary of this function goes here
 %The eight values of a transform
 % 1. Line position of the range block iR
@@ -8,8 +8,6 @@ function [ transforms ] = encodeFractalImage(image)
 % 5. symmetry
 
 
-readImage = imread(image);
-img = normalizeImage(readImage);
 
 kBlocksR = intoRangeBlocks(img);
 kBlocksD = intoDomainBlocks(img);

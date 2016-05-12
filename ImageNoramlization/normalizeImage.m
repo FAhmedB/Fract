@@ -5,7 +5,6 @@ function outputImage = normalizeImage( image )
 
 outputImage = normalizeDefinition(image);
 outputImage = toGray(outputImage);
-outputImage = cropToObject(outputImage);
 
 end
 
