@@ -1,50 +1,58 @@
-function [ finalObject ] = cropToObject( img )
+function [ finalObject ] = cropToObject( img, nbrMinima )
 %CROPTOOBJECT removes the background and return only
 % the object in a new image
 
-% Detecting edges
-[junk threshold] = edge(img, 'sobel');
-fudgeFactor = .5;
-edges = edge(img,'sobel', threshold * fudgeFactor);
 
-% Creating structuring elements
-se90 = strel('line', 3, 90);
-se0 = strel('line', 3, 0);
-
-% Dilating the image
-continuousEdges = imdilate(edges, [se90 se0]);
-
-% Filling gaps
-filledObj = imfill(continuousEdges, 'holes');
-
-% Removing borders
-withoutBorders = imclearborder(filledObj, 4);
-
-% Smoothing
-seD = strel('diamond',1);
-smoothedObj = imerode(withoutBorders,seD);
-smoothedObj = imerode(smoothedObj,seD);
+% two zones black and white
+twoZ = twoZones(img);
 
 % Finding regions
-S = regionprops(smoothedObj, 'Area','BoundingBox');
+S = regionprops(twoZ, 'Area','BoundingBox');
 
 % Finding the biggest region
 All_areas = vertcat(S.Area);
 [MaxArea, MaxAreaIdx] = (max(All_areas(:)));
-biggestBox = S(MaxAreaIdx).BoundingBox;
+if ~isempty(MaxArea)
+    biggestBox = S(MaxAreaIdx).BoundingBox;
+else
+    finalObject{1} = zeros(64);
+    disp('We have found no object here');
+    return
+end
 
 grayObj = imcrop(img, biggestBox);
 %figure, imshow(grayObj), title('Gray Object');
 
-bwObj = imcrop(smoothedObj, biggestBox);
+
+bwObj = imcrop(twoZ, biggestBox);
 %figure, imshow(bwObj), title('Binary Object');
-
-
-grayObjWithoutBackground = uint8(bwObj) .* uint8(grayObj);
+grayObjWithoutBackground = uint8(bwObj) .* grayObj;
 %imshow(grayObjWithoutBackground), title('Object');
 
 level = graythresh(grayObj);
-finalObject = im2bw(grayObjWithoutBackground, 0.7*level);
-%figure, imshow(finalObject), title('Final Binary Object');
+finalObject0 = im2bw(grayObjWithoutBackground, Cst.THRESHOLDING_FACTOR*level);
+
+%figure, imshow(finalObject0), title('Final Binary Object0 ');
+
+[rotation box] = getBestRotation(finalObject0);
+for i=1:nbrMinima
+    rt = rotation(i);
+    bx = box(i,:);
+    
+    finalObject{i} = imcrop(imrotate(finalObject0,rt),bx);
+    
+    
+    if ~leftIsBigger(finalObject{i})
+        finalObject{i} = imrotate(finalObject{i},180);
+    end
+    minsize = min(size(finalObject{i}));
+    if minsize < 64
+        finalObject{i} = imresize(finalObject{i}, 64/minsize,'box');
+    end
+    %figure, imshow(finalObject{i}), title('Final Binary Object');
 end
+
+
+
+
 

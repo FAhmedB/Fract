@@ -19,7 +19,7 @@ iterator = 1;
 for r = 1:shift1:(nRows-size1Block+1)
     for c = 1:shift2:(nColumns-size2Block+1)
         blocks(:,:,iterator) = inputImage(r:(r+size1Block-1), c:(c+size2Block-1));
-        keys(:,iterator) = [r/nRows c/nColumns];
+        keys(:,iterator) = [(r-1)/(nRows-size1Block) (c-1)/(nColumns-size2Block)];
         iterator = iterator + 1;
     end
 end
