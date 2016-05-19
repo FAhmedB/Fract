@@ -13,12 +13,12 @@ D2 = 2*B2;
 for iteration=1:numberOfIterations
     initialImage = newImage;
     for i = 1:nBlocks
-        iR = floor(transforms(1,i) * nRows);
-        jR = floor(transforms(2,i) * nColumns);
-        iD = floor(transforms(3,i) * nRows);
-        jD = floor(transforms(4,i) * nColumns);
+        iR = floor(transforms(1,i) * (nRows-B1))+1;
+        jR = floor(transforms(2,i) * (nColumns-B2))+1;
+        iD = floor(transforms(3,i) * (nRows-D1))+1;
+        jD = floor(transforms(4,i) * (nColumns-D2))+1;
         sym = transforms(5,i);
-        newImage(iR+1:iR+B1,jR+1:jR+B2) = isometry(shrinkBlock(initialImage(iD+1:iD+D1,jD+1:jD+D2),B1,B2), sym);        
+        newImage(iR:iR+B1-1,jR:jR+B2-1) = isometry(shrinkBlock(initialImage(iD:iD+D1-1,jD:jD+D2-1),B1,B2), sym);        
     end
 end
  

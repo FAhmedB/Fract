@@ -2,17 +2,21 @@ function [ degrees, bestBox ] = getBestRotation( obj )
 %GETBESTROTATION Summary of this function goes here
 %   Detailed explanation goes here
 
-smallestArea = inf * [1 1 1];
-degrees = [0 0 0];
-bestBox = zeros(3,4);
+smallestArea = inf * [1 1 1 1];
+degrees = [0 0 0 0];
+bestBox = zeros(4,4);
 
 
 
-for d=0:1:89
+for d=0:1:90
     rotatedObj = imrotate(obj,d);
     box = removeBlackBackground(rotatedObj);
     area = box(3) * box(4);
-    if (area < smallestArea(3)) && (area > smallestArea(2))
+    if (area < smallestArea(4)) && (area > smallestArea(3))
+        degrees(4) = d;
+        smallestArea(4) = area;
+        bestBox(4,:) = box;
+    elseif (area < smallestArea(3)) && (area > smallestArea(2))
         degrees(3) = d;
         smallestArea(3) = area;
         bestBox(3,:) = box;
@@ -25,6 +29,12 @@ for d=0:1:89
         smallestArea(1) = area;
         bestBox(1,:) = box;
     end
+end
+
+
+if bestBox(4,3)< bestBox(4,4);
+    degrees(4) = degrees(4) + 90;
+    bestBox(4,:) = removeBlackBackground(imrotate(obj,degrees(4)));
 end
 
 if bestBox(3,3)< bestBox(3,4);

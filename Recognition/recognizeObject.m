@@ -1,16 +1,16 @@
-function name = recognizeObject( image )
+function name = recognizeObject( img )
 %RECOGNIZEOBJECT Summary of this function goes here
 %   Detailed explanation goes here
 
-img = normalizeImage(imread(image));
+img = normalizeImage(imread(img));
 img = cropToObject(img,1);
+img = img{1};
 db = load('fractalDB.mat');
 error = inf;
 arrayOfObjects = db.arrayOfObjects;
 for o = arrayOfObjects
     decodedImage = decodeFractalImage( o.transforms, img, 1);
-    o.name
-    errorTemp = berror(img, decodedImage)
+    errorTemp = berror(img, decodedImage);
     if errorTemp < error
         recognizedObject = o.name;
         error = errorTemp;
