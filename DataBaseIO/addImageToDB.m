@@ -20,9 +20,7 @@ for i=1:length(croppedImages)
         save('fractalDB.mat','arrayOfObjects');
     end
     db = load('fractalDB.mat');
-    newImageEntry.thresh = estimateThresh(croppedImages{i},transforms, imageName, db.arrayOfObjects);
     arrayOfObjects = [db.arrayOfObjects, newImageEntry];
-    arrayOfObjects = updateThresh(arrayOfObjects);
     save('fractalDB.mat','arrayOfObjects');
 end
 

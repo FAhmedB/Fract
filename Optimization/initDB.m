@@ -3,8 +3,10 @@ function initDB( allImages )
 %   Detailed explanation goes here
 
 delete('fractalDB.mat');
-for imageList = allImages
-        addImageToDB(imageList.images{1},imageList.name);
+nImageList = length(allImages);
+for i = 1:nImageList
+    imageList = allImages(i);
+    addImageToDB(imageList.images{15},imageList.name);
 end
 
 end
