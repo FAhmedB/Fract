@@ -46,7 +46,9 @@ for i=1:nbrMinima
         finalObject{i} = imrotate(finalObject{i},180);
     end
     minsize = min(size(finalObject{i}));
-    if minsize < 64
+    if minsize == 0
+        finalObject{i} = ones(64);
+    elseif minsize < 64
         finalObject{i} = imresize(finalObject{i}, 64/minsize,'box');
     end
     %figure, imshow(finalObject{i}), title('Final Binary Object');

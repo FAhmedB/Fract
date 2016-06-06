@@ -5,7 +5,7 @@ function [ smoothedObj ] = twoZones( img )
 % Detecting edges
 [junk threshold] = edge(img, 'sobel');
 fudgeFactor = Cst.FUDGE_FACTOR;
-edges = edge(img,'sobel', threshold * fudgeFactor);
+edges = edge(img,Cst.EDGE_FILTER, threshold * fudgeFactor);
 
 % Creating structuring elements
 se90 = strel('line', Cst.ST_LINE_LENGTH, 90);
@@ -17,6 +17,8 @@ continuousEdges = imdilate(edges, [se90 se0]);
 
 % Filling gaps
 filledObj = imfill(continuousEdges, 'holes');
+
+%withoutBorders = imclearborder(filledObj, Cst.BORDER_CONNECTIVITY);
 
 % Smoothing
 seD = strel('diamond',Cst.ST_DIAMOND_R);
